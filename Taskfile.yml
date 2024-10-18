@@ -1,0 +1,49 @@
+version: "3"
+
+tasks:
+  default:
+    aliases:
+      - list
+    desc: List all tasks.
+    cmd: task -l
+
+  build:
+    desc: Build docker image.
+    cmds:
+      - docker compose build --no-cache
+
+  dev:
+    desc: Start development container and tail container logs.
+    cmds:
+      - task: start
+      - task: logs
+
+  start:
+    desc: Start development container.
+    cmds:
+      - docker compose up -d
+
+  stop:
+    desc: Stop development container.
+    cmds:
+      - docker compose down
+
+  remove:
+    desc: Remove development container and volume.
+    cmds:
+      - docker compose down -v
+
+  check:
+    desc: Check container status.
+    cmds:
+      - docker compose ps
+
+  logs:
+    desc: Tail container logs.
+    cmds:
+      - docker compose logs -f
+
+  test:
+    desc: Run tests.
+    cmds:
+      - go test -race -shuffle=on -v ./...
